@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fish Hack | 大洗の地魚を料理人へ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Serif+JP:wght@300;400;700&family=Nunito:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#1a1612;
+  --sand:#c8b49a;
+  --sand-lt:#ede5d8;
+  --ocean:#1a4a6b;
+  --ocean-lt:#e8f2f8;
+  --coral:#e05a30;
+  --coral-lt:#fdf0ea;
+  --teal:#0f7c6e;
+  --cream:#faf7f2;
+  --white:#ffffff;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Serif JP',serif;color:var(--ink);background:var(--cream);}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,180,154,0.3);padding:0 5%;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink);letter-spacing:1px;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;opacity:0.7;transition:opacity 0.2s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;background:var(--coral);color:#fff;padding:8px 18px;border-radius:20px;text-decoration:none;transition:background 0.2s;}
+.nav-cta:hover{background:#c04a22;}
+
+/* ===== HERO ===== */
+.hero{height:100vh;min-height:600px;background:linear-gradient(160deg,#0d2235 0%,#1a4a6b 40%,#2d6a5e 100%);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding-top:64px;}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1534483509719-3feaee7c30da?w=1600&q=80') center/cover no-repeat;opacity:0.18;}
+.hero-content{position:relative;z-index:1;padding:0 5%;}
+.hero-en{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,12vw,140px);font-weight:300;color:var(--white);letter-spacing:0.05em;line-height:0.9;opacity:0.95;}
+.hero-ja{font-size:clamp(15px,2vw,20px);font-weight:300;color:rgba(255,255,255,0.8);letter-spacing:0.2em;margin-top:1.5rem;}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.5;}
+.hero-scroll span{font-family:'Nunito',sans-serif;font-size:10px;color:#fff;letter-spacing:0.2em;}
+.hero-scroll-line{width:1px;height:40px;background:rgba(255,255,255,0.5);animation:scrollLine 1.8s ease-in-out infinite;}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* ===== SECTION BASE ===== */
+section{padding:100px 5%;}
+.section-en{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);font-weight:300;line-height:1;margin-bottom:0.4em;}
+.section-ja{font-size:clamp(14px,1.8vw,18px);font-weight:300;letter-spacing:0.15em;color:#666;margin-bottom:2.5rem;}
+.section-body{font-size:clamp(14px,1.6vw,17px);line-height:2;font-weight:300;}
+.inner{max-width:1100px;margin:0 auto;}
+
+/* ===== VISION ===== */
+#vision{background:var(--cream);padding-top:140px;}
+.vision-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.vision-text .section-en{color:var(--ocean);}
+.vision-accent{width:48px;height:2px;background:var(--sand);margin:2rem 0;}
+.vision-img{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--ocean) 0%,var(--teal) 100%);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:0.85;}
+
+/* ===== ISSUE ===== */
+#issue{background:var(--ink);color:#fff;}
+#issue .section-en{color:rgba(255,255,255,0.12);}
+#issue .section-ja{color:rgba(255,255,255,0.5);}
+.issue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3rem;}
+.issue-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:2rem;transition:background 0.3s;}
+.issue-card:hover{background:rgba(255,255,255,0.07);}
+.issue-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--sand);opacity:0.6;margin-bottom:1rem;}
+.issue-title{font-size:16px;font-weight:700;margin-bottom:0.8rem;color:rgba(255,255,255,0.9);}
+.issue-text{font-size:13px;line-height:1.9;color:rgba(255,255,255,0.55);font-weight:300;}
+
+/* ===== FEATURES ===== */
+#features{background:var(--white);}
+#features .section-en{color:var(--teal);}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.feat-card{padding:2.5rem 2rem;border:1px solid var(--sand-lt);border-radius:4px;position:relative;overflow:hidden;transition:border-color 0.3s;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--coral);}
+.feat-card:hover{border-color:var(--sand);}
+.feat-icon{font-size:36px;margin-bottom:1.2rem;}
+.feat-title{font-size:20px;font-weight:700;margin-bottom:1rem;color:var(--ink);}
+.feat-text{font-size:14px;line-height:2;color:#555;font-weight:300;}
+.feat-tag{display:inline-block;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;background:var(--coral-lt);color:var(--coral);padding:3px 10px;border-radius:20px;margin-top:1rem;}
+
+/* ===== OARAI ===== */
+#oarai{background:var(--ocean-lt);}
+#oarai .section-en{color:var(--ocean);}
+.oarai-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:2rem;}
+.oarai-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.stat-box{background:var(--white);padding:1.5rem;border-radius:4px;text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--ocean);}
+.stat-label{font-size:12px;color:#777;margin-top:0.3rem;letter-spacing:0.1em;}
+.oarai-img{background:linear-gradient(135deg,#1a4a6b,#0f7c6e);border-radius:4px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:100px;}
+
+/* ===== ITEMS ===== */
+#items{background:var(--cream);}
+#items .section-en{color:var(--coral);}
+.items-tabs{display:flex;gap:8px;margin-bottom:2.5rem;border-bottom:2px solid var(--sand-lt);padding-bottom:0;}
+.items-tab{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px 8px 0 0;cursor:pointer;border:none;background:none;color:#888;transition:all 0.2s;}
+.items-tab.active{background:var(--coral-lt);color:var(--coral);border-bottom:2px solid var(--coral);margin-bottom:-2px;}
+.items-panel{display:none;}.items-panel.active{display:block;}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+.item-card{background:var(--white);border:1.5px solid #f0e8de;border-radius:12px;overflow:hidden;transition:transform 0.18s;}
+.item-card:hover{transform:translateY(-3px);}
+.item-card.new-card{border-color:#ffc3d0;}
+.item-img{height:90px;display:flex;align-items:center;justify-content:center;font-size:44px;}
+.item-img.bg-o{background:#fff3e0;}.item-img.bg-p{background:#fff0f3;}.item-img.bg-b{background:#e0f7fa;}
+.item-body{padding:10px 12px 14px;}
+.item-new{font-family:'Nunito',sans-serif;font-size:9px;font-weight:900;background:var(--coral);color:#fff;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:4px;}
+.item-name{font-size:13px;font-weight:700;margin-bottom:2px;color:var(--ink);}
+.item-origin{font-size:11px;color:#888;margin-bottom:6px;}
+.item-price{font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;color:var(--coral);}
+.item-unit{font-size:10px;color:#999;margin-left:2px;}
+
+/* ===== MARKET ===== */
+.market-box{background:linear-gradient(135deg,#e0f7fa,#b2ebf2);border-radius:12px;padding:2rem;margin-top:2.5rem;}
+.market-note{font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#007a99;margin-bottom:1rem;}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.market-item{background:#fff;border-radius:8px;padding:12px 14px;border:1px solid rgba(0,180,216,0.2);}
+.market-fish{font-size:13px;font-weight:700;color:#0077a8;margin-bottom:3px;}
+.market-range{font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:#00587a;}
+.market-sub{font-size:10px;color:#0099cc;margin-top:2px;}
+
+/* ===== ORDER ===== */
+#order{background:var(--ink);color:#fff;text-align:center;}
+#order .section-en{color:rgba(255,255,255,0.1);}
+#order .section-ja{color:rgba(255,255,255,0.4);}
+.order-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);margin:3rem 0;}
+.step{background:var(--ink);padding:2rem 1.5rem;position:relative;}
+.step::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.2);font-size:20px;z-index:1;}
+.step:last-child::after{display:none;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--sand);opacity:0.5;}
+.step-icon{font-size:32px;margin:0.5rem 0;}
+.step-title{font-size:14px;font-weight:700;margin-bottom:0.5rem;}
+.step-text{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.8;}
+
+/* ===== CTA ===== */
+#cta{background:linear-gradient(135deg,var(--ocean) 0%,var(--teal) 100%);text-align:center;color:#fff;}
+#cta .section-en{color:rgba(255,255,255,0.15);}
+.cta-title{font-size:clamp(22px,3vw,32px);font-weight:300;letter-spacing:0.15em;margin-bottom:1rem;}
+.cta-text{font-size:15px;color:rgba(255,255,255,0.7);line-height:2;margin-bottom:2.5rem;}
+.cta-btn{display:inline-block;font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;background:var(--white);color:var(--ocean);padding:16px 48px;border-radius:40px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+.cta-btn:hover{transform:translateY(-2px);}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.4);margin-top:1rem;}
+
+/* ===== CONTACT ===== */
+#contact{background:var(--cream);}
+#contact .section-en{color:var(--ink);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:2rem;}
+.contact-info dt{font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;color:var(--sand);text-transform:uppercase;margin-bottom:4px;margin-top:1.5rem;}
+.contact-info dd{font-size:15px;color:var(--ink);}
+.contact-info dd a{color:var(--ocean);text-decoration:none;}
+.contact-map{background:var(--sand-lt);border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:var(--sand);font-size:48px;}
+
+/* ===== FOOTER ===== */
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:2.5rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,0.7);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-family:'Nunito',sans-serif;font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;}
+.footer-copy{font-family:'Nunito',sans-serif;font-size:11px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .vision-layout,.oarai-layout,.contact-grid{grid-template-columns:1fr;}
+  .issue-grid,.features-grid,.order-steps{grid-template-columns:1fr;}
+  .step::after{display:none;}
+  .nav-links{display:none;}
+  .oarai-img{display:none;}
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-in.visible{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🐟</div>
+      <span class="nav-logo-text">Fish Hack</span>
+    </a>
+    <div class="nav-links">
+      <a href="#vision">Vision</a>
+      <a href="#features">Features</a>
+      <a href="#oarai">大洗</a>
+      <a href="#items">アイテム</a>
+      <a href="#order">注文</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="https://form.run/@epw-ds--JkOsbf37iRHApb0uipPi" target="_blank" class="nav-cta">無料で会員登録</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-en fade-in">vision</div>
+    <p class="hero-ja fade-in">仕入れ・下処理の時間を減らし、料理人が料理に専念できる世界を</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="inner">
+    <div class="vision-layout">
+      <div class="vision-text fade-in">
+        <div class="section-en">Vision</div>
+        <p class="section-ja">Fish Hackが目指す世界</p>
+        <div class="vision-accent"></div>
+        <p class="section-body">料理人は早朝から仕入れと仕込み、ランチから夜の営業まで休む間もなく時間に追われています。良いお店ほど自分の目で見て新鮮な魚介類を仕入れたいと願い、忙しい合間を縫って市場に足を運び、魚を調達しています。1回の仕入れには2〜3時間かかります。<br><br>Fish Hackでは料理人が料理に専念できるお時間の創出と、高鮮度の地魚を提供させていただきます。</p>
+      </div>
+      <div class="vision-img fade-in">🌊</div>
+    </div>
+  </div>
+</section>
+
+<!-- ISSUE -->
+<section id="issue">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en" style="color:rgba(255,255,255,0.08);">Issue</div>
+      <p class="section-ja">料理人が抱える課題</p>
+    </div>
+    <div class="issue-grid">
+      <div class="issue-card fade-in">
+        <div class="issue-num">01</div>
+        <div class="issue-title">仕入れに時間がかかる</div>
+        <p class="issue-text">1回の仕入れに2〜3時間。早朝から市場へ出向き、魚を選び、持ち帰る時間は調理の時間を奪います。</p>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-num">02</div>
+        <div class="issue-title">下処理の人件費・食材ロス</div>
+        <p class="issue-text">仕込みと調理の手間が重なり、食材ロスや人件費の増大につながります。</p>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-num">03</div>
+        <div class="issue-title">鮮度の不安定さ</div>
+        <p class="issue-text">市場経由では産地から時間がかかり、鮮度にばらつきが生じます。最高の状態で提供したくても限界があります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Features</div>
+      <p class="section-ja">Fish Hackの3つの強み</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card fade-in">
+        <div class="feat-icon">🎣</div>
+        <div class="feat-title">高鮮度の地魚<br>オーダーメイド</div>
+        <p class="feat-text">高鮮度の地魚をオーダーメイドでお届けします。仕込みや調理の手間を削減し、食材ロスや人件費を効率よく削減可能です。3枚おろしやフィレ、グラム指定のカット等ご要望に応対します。</p>
+        <span class="feat-tag">オーダーメイド対応</span>
+      </div>
+      <div class="feat-card fade-in">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">丁寧仕立<br>放血神経締め</div>
+        <p class="feat-text">大洗港で水揚げされた地魚を最速で下処理します。「放血神経締め」にて魚介の鮮度と旨みのポテンシャルを最大限に高めます。</p>
+        <span class="feat-tag">鮮度最大化</span>
+      </div>
+      <div class="feat-card fade-in">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">スマホで<br>カンタン注文</div>
+        <p class="feat-text">スマホから簡単に注文できます。14時までのご注文で即日発送いたします。忙しい料理人の方でも手軽にご利用いただけます。</p>
+        <span class="feat-tag">14時〆即日発送</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OARAI -->
+<section id="oarai">
+  <div class="inner">
+    <div class="oarai-layout">
+      <div class="fade-in">
+        <div class="section-en">Oarai</div>
+        <p class="section-ja">大洗の地魚を</p>
+        <p class="section-body">大洗港は大きな河川が流れ込み、とても身質の良い魚介類が水揚げされます。さらに暖流と寒流がぶつかる海域で魚種の豊富さも魅力の一つとなっております。</p>
+        <div class="oarai-stats">
+          <div class="stat-box">
+            <div class="stat-num">20<small style="font-size:20px">+</small></div>
+            <div class="stat-label">取扱魚種</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">即日</div>
+            <div class="stat-label">発送対応</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">0</div>
+            <div class="stat-label">初期費用</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">14<small style="font-size:14px">時〆</small></div>
+            <div class="stat-label">注文締切</div>
+          </div>
+        </div>
+      </div>
+      <div class="oarai-img fade-in">⚓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ITEMS -->
+<section id="items">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Items</div>
+      <p class="section-ja">アイテム・価格相場</p>
+    </div>
+    <div class="items-tabs">
+      <button class="items-tab active" onclick="switchItemTab('new')">🆕 新着アイテム</button>
+      <button class="items-tab" onclick="switchItemTab('all')">📦 アイテム一覧</button>
+      <button class="items-tab" onclick="switchItemTab('market')">💴 価格相場</button>
+    </div>
+
+    <!-- 新着 -->
+    <div class="items-panel active" id="tab-new">
+      <div class="items-grid" id="grid-new"></div>
+    </div>
+
+    <!-- 一覧 -->
+    <div class="items-panel" id="tab-all">
+      <div class="items-grid" id="grid-all"></div>
+    </div>
+
+    <!-- 相場 -->
+    <div class="items-panel" id="tab-market">
+      <div class="market-box">
+        <p class="market-note">※ 仕入れ状況により変動あり　随時更新</p>
+        <div class="market-grid" id="grid-market"></div>
+      </div>
+      <p style="font-size:11px;color:#999;margin-top:10px;padding:6px 12px;background:#f5f0ea;border-radius:6px;">価格はすべて目安です。数量・時期・産地により変わります。詳細はお問い合わせください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="inner">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-en">Order</div>
+      <p class="section-ja" style="color:rgba(255,255,255,0.4);">ご注文の流れ</p>
+    </div>
+    <div class="order-steps">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-icon">📝</div>
+        <div class="step-title">会員登録</div>
+        <p class="step-text">無料で会員登録。初期費用・月会費なし。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-icon">📱</div>
+        <div class="step-title">スマホで注文</div>
+        <p class="step-text">魚種・カット方法・グラム数を指定して注文。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-icon">⚡</div>
+        <div class="step-title">14時〆 即日処理</div>
+        <p class="step-text">大洗港で水揚げ後、最速で下処理・梱包。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚚</div>
+        <div class="step-title">翌朝お届け</div>
+        <p class="step-text">高鮮度のまま直接お届け。仕込み不要で調理へ。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="inner" style="text-align:center;">
+    <div class="section-en fade-in">Join</div>
+    <p class="cta-title fade-in">今すぐ始める</p>
+    <p class="cta-text fade-in">無料会員登録で、大洗の高鮮度地魚を<br>あなたのキッチンへ。</p>
+    <a href="https://form.run/@epw-ds--JkOsbf37iRHApb0uipPi" target="_blank" class="cta-btn fade-in">無料で会員登録する</a>
+    <p class="cta-note fade-in">初期費用・月会費なし　14時までのご注文で即日発送</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Contact</div>
+      <p class="section-ja">お問い合わせ</p>
+    </div>
+    <div class="contact-grid">
+      <dl class="contact-info fade-in">
+        <dt>Company</dt>
+        <dd>株式会社 One Table Design</dd>
+        <dt>Address</dt>
+        <dd>〒311-1301<br>茨城県東茨城郡大洗町港中央9-4</dd>
+        <dt>TEL</dt>
+        <dd><a href="tel:0292672278">029-267-2278</a></dd>
+        <dt>Mail</dt>
+        <dd><a href="mailto:epw.ds0626@gmail.com">epw.ds0626@gmail.com</a></dd>
+        <dt>Web</dt>
+        <dd><a href="https://epwds0626-oss.github.io/onetable-design/" target="_blank">One Table Design</a></dd>
+      </dl>
+      <div class="contact-map fade-in">⚓</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fish Hack</div>
+  <div class="footer-links">
+    <a href="#vision">Vision</a>
+    <a href="#features">Features</a>
+    <a href="#items">Items</a>
+    <a href="#order">Order</a>
+    <a href="https://epwds0626-oss.github.io/onetable-design/" target="_blank">One Table Design</a>
+  </div>
+  <div class="footer-copy">© 2025 Fish Hack / One Table Design</div>
+</footer>
+
+<script>
+// ===== ITEM DATA (ここを編集してください) =====
+const items = {
+  newItems: [
+    {emoji:'🐟',name:'釜揚げシラス',origin:'大洗産',price:'¥350',unit:'/ 100g〜',bg:'bg-b'},
+    {emoji:'🐙',name:'生塩揉みマダコ',origin:'大洗産',price:'¥3,250',unit:'/ kg〜',bg:'bg-p'},
+    {emoji:'🦪',name:'活はまぐり',origin:'大洗産',price:'¥2,800',unit:'/ kg〜',bg:'bg-o'},
+    {emoji:'🐚',name:'活しじみ',origin:'涸沼産',price:'¥1,900',unit:'/ kg〜',bg:'bg-b'},
+  ],
+  allItems: [
+    {emoji:'🐟',name:'釜揚げシラス',origin:'大洗産',price:'¥350',unit:'/ 100g〜',bg:'bg-b'},
+    {emoji:'🐙',name:'生塩揉みマダコ',origin:'大洗産',price:'¥3,250',unit:'/ kg〜',bg:'bg-p'},
+    {emoji:'🦪',name:'活はまぐり',origin:'大洗産　1ヶ約100g前後',price:'¥2,800',unit:'/ kg〜',bg:'bg-o'},
+    {emoji:'🐚',name:'活しじみ',origin:'涸沼産',price:'¥1,900',unit:'/ kg〜',bg:'bg-b'},
+    {emoji:'🦪',name:'活真牡蠣',origin:'宮城・岩手・北海道他　中小サイズ',price:'¥280',unit:'/ 1ヶ',bg:'bg-o'},
+    {emoji:'🦑',name:'マツイカ（冷凍）',origin:'アルゼンチン産　1杯250g前後',price:'¥1,850',unit:'/ kg〜',bg:'bg-p'},
+    {emoji:'🦐',name:'無頭バナメイ海老（冷凍）',origin:'ペルー産　1.8kg/ケース',price:'¥3,300',unit:'/ ケース',bg:'bg-b'},
+    {emoji:'🦑',name:'ヤリイカ（冷凍）',origin:'アメリカ産　2.27kg/ケース',price:'¥2,900',unit:'/ ケース',bg:'bg-p'},
+  ],
+  market: [
+    {emoji:'🐟',name:'釜揚げシラス',range:'¥350/100g〜',note:'大洗産'},
+    {emoji:'🐙',name:'生塩揉みマダコ',range:'¥3,250/kg〜',note:'大洗産'},
+    {emoji:'🦪',name:'活はまぐり',range:'¥2,800/kg〜',note:'大洗産・1ヶ約100g前後'},
+    {emoji:'🐚',name:'活しじみ',range:'¥1,900/kg〜',note:'涸沼産'},
+    {emoji:'🦪',name:'活真牡蠣',range:'¥280/1ヶ',note:'宮城・岩手・北海道他'},
+    {emoji:'🦑',name:'マツイカ（冷凍）',range:'¥1,850/kg〜',note:'アルゼンチン産'},
+    {emoji:'🦐',name:'バナメイ海老（冷凍）',range:'¥3,300/ケース',note:'ペルー産・1.8kg入'},
+    {emoji:'🦑',name:'ヤリイカ（冷凍）',range:'¥2,900/ケース',note:'アメリカ産・2.27kg入'},
+  ]
+};
+
+function renderItems(){
+  // 新着
+  document.getElementById('grid-new').innerHTML = items.newItems.map(it=>`
+    <div class="item-card new-card">
+      <div class="item-img ${it.bg}">${it.emoji}</div>
+      <div class="item-body">
+        <span class="item-new">NEW</span>
+        <p class="item-name">${it.name}</p>
+        <p class="item-origin">${it.origin}</p>
+        <span class="item-price">${it.price}</span><span class="item-unit">${it.unit}</span>
+      </div>
+    </div>`).join('');
+  // 一覧
+  document.getElementById('grid-all').innerHTML = items.allItems.map(it=>`
+    <div class="item-card">
+      <div class="item-img ${it.bg}">${it.emoji}</div>
+      <div class="item-body">
+        <p class="item-name">${it.name}</p>
+        <p class="item-origin">${it.origin}</p>
+        <span class="item-price">${it.price}</span><span class="item-unit">${it.unit}</span>
+      </div>
+    </div>`).join('');
+  // 相場
+  document.getElementById('grid-market').innerHTML = items.market.map(m=>`
+    <div class="market-item">
+      <p class="market-fish">${m.emoji} ${m.name}</p>
+      <p class="market-range">${m.range}</p>
+      <p class="market-sub">${m.note}</p>
+    </div>`).join('');
+}
+
+function switchItemTab(tab){
+  document.querySelectorAll('.items-tab').forEach((b,i)=>{
+    b.classList.toggle('active', ['new','all','market'][i]===tab);
+  });
+  document.querySelectorAll('.items-panel').forEach((p,i)=>{
+    p.classList.toggle('active', ['tab-new','tab-all','tab-market'][i]==='tab-'+tab);
+  });
+}
+
+// ===== FADE IN =====
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.12});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+renderItems();
+</script>
+</body>
+</html>
