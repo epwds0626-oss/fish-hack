@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fish Hack | 大洗の地魚を料理人へ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Serif+JP:wght@300;400;700&family=Nunito:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#1a1612;
+  --sand:#c8b49a;
+  --sand-lt:#ede5d8;
+  --ocean:#1a4a6b;
+  --ocean-lt:#e8f2f8;
+  --coral:#e05a30;
+  --coral-lt:#fdf0ea;
+  --teal:#0f7c6e;
+  --cream:#faf7f2;
+  --white:#ffffff;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Serif JP',serif;color:var(--ink);background:var(--cream);}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,180,154,0.3);padding:0 5%;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink);letter-spacing:1px;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;opacity:0.7;transition:opacity 0.2s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;background:var(--coral);color:#fff;padding:8px 18px;border-radius:20px;text-decoration:none;transition:background 0.2s;}
+.nav-cta:hover{background:#c04a22;}
+
+/* ===== HERO ===== */
+.hero{height:100vh;min-height:600px;background:linear-gradient(160deg,#0d2235 0%,#1a4a6b 40%,#2d6a5e 100%);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding-top:64px;}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1600&q=80') center/cover no-repeat;opacity:0.22;}
+.hero-content{position:relative;z-index:1;padding:0 5%;}
+.hero-en{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,12vw,140px);font-weight:300;color:var(--white);letter-spacing:0.05em;line-height:0.9;opacity:0.95;}
+.hero-ja{font-size:clamp(15px,2vw,20px);font-weight:300;color:rgba(255,255,255,0.8);letter-spacing:0.2em;margin-top:1.5rem;}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.5;}
+.hero-scroll span{font-family:'Nunito',sans-serif;font-size:10px;color:#fff;letter-spacing:0.2em;}
+.hero-scroll-line{width:1px;height:40px;background:rgba(255,255,255,0.5);animation:scrollLine 1.8s ease-in-out infinite;}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* ===== SECTION BASE ===== */
+section{padding:100px 5%;}
+.section-en{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);font-weight:300;line-height:1;margin-bottom:0.4em;}
+.section-ja{font-size:clamp(14px,1.8vw,18px);font-weight:300;letter-spacing:0.15em;color:#666;margin-bottom:2.5rem;}
+.section-body{font-size:clamp(14px,1.6vw,17px);line-height:2;font-weight:300;}
+.inner{max-width:1100px;margin:0 auto;}
+
+/* ===== VISION ===== */
+#vision{background:var(--cream);padding-top:140px;}
+.vision-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.vision-text .section-en{color:var(--ocean);}
+.vision-accent{width:48px;height:2px;background:var(--sand);margin:2rem 0;}
+.vision-img{width:100%;aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;background:#0d1f2e;}
+
+/* ===== ISSUE ===== */
+#issue{background:var(--ink);color:#fff;}
+#issue .section-en{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);font-weight:300;line-height:1;margin-bottom:0.4em;color:rgba(255,255,255,0.5);-webkit-text-stroke:1px rgba(255,255,255,0.3);}
+#issue .section-ja{font-size:clamp(14px,1.8vw,18px);font-weight:300;letter-spacing:0.15em;color:rgba(255,255,255,0.7);margin-bottom:2.5rem;}
+.issue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3rem;}
+.issue-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:2rem;transition:background 0.3s;}
+.issue-card:hover{background:rgba(255,255,255,0.07);}
+.issue-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--coral);opacity:0.8;margin-bottom:1rem;}
+.issue-title{font-size:16px;font-weight:700;margin-bottom:0.8rem;color:rgba(255,255,255,0.95);}
+.issue-text{font-size:13px;line-height:1.9;color:rgba(255,255,255,0.65);font-weight:300;}
+
+/* ===== FEATURES ===== */
+#features{background:var(--white);}
+#features .section-en{color:var(--teal);}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.feat-card{padding:2.5rem 2rem;border:1px solid var(--sand-lt);border-radius:4px;position:relative;overflow:hidden;transition:border-color 0.3s;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--coral);}
+.feat-card:hover{border-color:var(--sand);}
+.feat-icon{font-size:36px;margin-bottom:1.2rem;}
+.feat-title{font-size:20px;font-weight:700;margin-bottom:1rem;color:var(--ink);}
+.feat-text{font-size:14px;line-height:2;color:#555;font-weight:300;}
+.feat-tag{display:inline-block;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;background:var(--coral-lt);color:var(--coral);padding:3px 10px;border-radius:20px;margin-top:1rem;}
+
+/* ===== OARAI ===== */
+#oarai{background:var(--ocean-lt);}
+#oarai .section-en{color:var(--ocean);}
+.oarai-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:2rem;}
+.oarai-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.stat-box{background:var(--white);padding:1.5rem;border-radius:4px;text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--ocean);}
+.stat-label{font-size:12px;color:#777;margin-top:0.3rem;letter-spacing:0.1em;}
+.oarai-img{border-radius:4px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#0d1f2e;overflow:hidden;position:relative;}
+
+/* ===== ITEMS ===== */
+#items{background:var(--cream);}
+#items .section-en{color:var(--coral);}
+.items-tabs{display:flex;gap:8px;margin-bottom:2.5rem;border-bottom:2px solid var(--sand-lt);padding-bottom:0;}
+.items-tab{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px 8px 0 0;cursor:pointer;border:none;background:none;color:#888;transition:all 0.2s;}
+.items-tab.active{background:var(--coral-lt);color:var(--coral);border-bottom:2px solid var(--coral);margin-bottom:-2px;}
+.items-panel{display:none;}.items-panel.active{display:block;}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+.item-card{background:var(--white);border:1.5px solid #f0e8de;border-radius:12px;overflow:hidden;transition:transform 0.18s;}
+.item-card:hover{transform:translateY(-3px);}
+.item-card.new-card{border-color:#ffc3d0;}
+.item-img{height:90px;display:flex;align-items:center;justify-content:center;font-size:44px;overflow:hidden;}
+.item-img img{width:100%;height:100%;object-fit:cover;}
+.item-img.bg-o{background:#fff3e0;}.item-img.bg-p{background:#fff0f3;}.item-img.bg-b{background:#e0f7fa;}
+.item-body{padding:10px 12px 14px;}
+.item-new{font-family:'Nunito',sans-serif;font-size:9px;font-weight:900;background:var(--coral);color:#fff;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:4px;}
+.item-name{font-size:13px;font-weight:700;margin-bottom:2px;color:var(--ink);}
+.item-origin{font-size:11px;color:#888;margin-bottom:6px;}
+.item-price{font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;color:var(--coral);}
+.item-unit{font-size:10px;color:#999;margin-left:2px;}
+
+/* ===== MARKET ===== */
+.market-box{background:linear-gradient(135deg,#e0f7fa,#b2ebf2);border-radius:12px;padding:2rem;margin-top:2.5rem;}
+.market-note{font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#007a99;margin-bottom:1rem;}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.market-item{background:#fff;border-radius:8px;padding:12px 14px;border:1px solid rgba(0,180,216,0.2);}
+.market-fish{font-size:13px;font-weight:700;color:#0077a8;margin-bottom:3px;}
+.market-range{font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:#00587a;}
+.market-sub{font-size:10px;color:#0099cc;margin-top:2px;}
+
+/* ===== ORDER ===== */
+#order{background:var(--ink);color:#fff;text-align:center;}
+#order .section-en{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);font-weight:300;line-height:1;margin-bottom:0.4em;color:rgba(255,255,255,0.5);-webkit-text-stroke:1px rgba(255,255,255,0.3);}
+#order .section-ja{font-size:clamp(14px,1.8vw,18px);font-weight:300;letter-spacing:0.15em;color:rgba(255,255,255,0.7);margin-bottom:2.5rem;}
+.order-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);margin:3rem 0;}
+.step{background:var(--ink);padding:2rem 1.5rem;position:relative;}
+.step::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.2);font-size:20px;z-index:1;}
+.step:last-child::after{display:none;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--coral);opacity:0.7;}
+.step-icon{font-size:32px;margin:0.5rem 0;}
+.step-title{font-size:14px;font-weight:700;margin-bottom:0.5rem;color:rgba(255,255,255,0.95);}
+.step-text{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.8;}
+
+/* ===== CTA ===== */
+#cta{background:linear-gradient(135deg,var(--ocean) 0%,var(--teal) 100%);text-align:center;color:#fff;}
+#cta .section-en{color:rgba(255,255,255,0.15);}
+.cta-title{font-size:clamp(22px,3vw,32px);font-weight:300;letter-spacing:0.15em;margin-bottom:1rem;}
+.cta-text{font-size:15px;color:rgba(255,255,255,0.7);line-height:2;margin-bottom:2.5rem;}
+.cta-btn{display:inline-block;font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;background:var(--white);color:var(--ocean);padding:16px 48px;border-radius:40px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+.cta-btn:hover{transform:translateY(-2px);}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.4);margin-top:1rem;}
+
+/* ===== CONTACT ===== */
+#contact{background:var(--cream);}
+#contact .section-en{color:var(--ink);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:2rem;}
+.contact-info dt{font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;color:var(--sand);text-transform:uppercase;margin-bottom:4px;margin-top:1.5rem;}
+.contact-info dd{font-size:15px;color:var(--ink);}
+.contact-info dd a{color:var(--ocean);text-decoration:none;}
+.contact-map{background:var(--sand-lt);border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:var(--sand);font-size:48px;}
+
+/* ===== FOOTER ===== */
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:2.5rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,0.7);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-family:'Nunito',sans-serif;font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;}
+.footer-copy{font-family:'Nunito',sans-serif;font-size:11px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .vision-layout,.oarai-layout,.contact-grid{grid-template-columns:1fr;}
+  .issue-grid,.features-grid,.order-steps{grid-template-columns:1fr;}
+  .step::after{display:none;}
+  .nav-links{display:none;}
+  .oarai-img{display:none;}
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-in.visible{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🐟</div>
+      <span class="nav-logo-text">Fish Hack</span>
+    </a>
+    <div class="nav-links">
+      <a href="#vision">Vision</a>
+      <a href="#features">Features</a>
+      <a href="#oarai">大洗</a>
+      <a href="#items">アイテム</a>
+      <a href="#order">注文</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="https://form.run/@epw-ds--JkOsbf37iRHApb0uipPi" target="_blank" class="nav-cta">無料で会員登録</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-en fade-in">vision</div>
+    <p class="hero-ja fade-in">仕入れ・下処理の時間を減らし、料理人が料理に専念できる世界を</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="inner">
+    <div class="vision-layout">
+      <div class="vision-text fade-in">
+        <div class="section-en">Vision</div>
+        <p class="section-ja">Fish Hackが目指す世界</p>
+        <div class="vision-accent"></div>
+        <p class="section-body">料理人は早朝から仕入れと仕込み、ランチから夜の営業まで休む間もなく時間に追われています。良いお店ほど自分の目で見て新鮮な魚介類を仕入れたいと願い、忙しい合間を縫って市場に足を運び、魚を調達しています。1回の仕入れには2〜3時間かかります。<br><br>Fish Hackでは料理人が料理に専念できるお時間の創出と、高鮮度の地魚を提供させていただきます。</p>
+      </div>
+      <div class="vision-img fade-in">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <linearGradient id="vg1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#0a2a3a"/>
+              <stop offset="60%" stop-color="#0d4a5e"/>
+              <stop offset="100%" stop-color="#0f7c6e"/>
+            </linearGradient>
+            <linearGradient id="vg2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="rgba(15,124,110,0.6)"/>
+              <stop offset="100%" stop-color="rgba(15,124,110,0.1)"/>
+            </linearGradient>
+          </defs>
+          <rect width="480" height="360" fill="url(#vg1)"/>
+          <!-- 遠景の山・陸地 -->
+          <path d="M0,180 Q60,150 120,165 Q180,140 240,155 Q300,145 360,160 Q420,150 480,165 L480,360 L0,360 Z" fill="rgba(10,30,45,0.6)"/>
+          <!-- 海面 -->
+          <path d="M0,220 Q40,210 80,220 Q120,230 160,220 Q200,210 240,220 Q280,230 320,220 Q360,210 400,220 Q440,230 480,220 L480,360 L0,360 Z" fill="url(#vg2)"/>
+          <!-- 波 -->
+          <path d="M0,240 Q30,232 60,240 Q90,248 120,240 Q150,232 180,240 Q210,248 240,240 Q270,232 300,240 Q330,248 360,240 Q390,232 420,240 Q450,248 480,240" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <path d="M0,258 Q40,250 80,258 Q120,266 160,258 Q200,250 240,258 Q280,266 320,258 Q360,250 400,258 Q440,266 480,258" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <!-- 船のシルエット -->
+          <g transform="translate(240,185)">
+            <!-- 船体 -->
+            <path d="M-60,20 L60,20 L50,35 L-50,35 Z" fill="rgba(200,180,154,0.5)"/>
+            <!-- マスト -->
+            <line x1="0" y1="20" x2="0" y2="-40" stroke="rgba(200,180,154,0.6)" stroke-width="1.5"/>
+            <!-- 帆 -->
+            <path d="M0,-38 L30,0 L0,0 Z" fill="rgba(200,180,154,0.25)"/>
+            <path d="M0,-38 L-22,0 L0,0 Z" fill="rgba(200,180,154,0.15)"/>
+            <!-- 横帆 -->
+            <line x1="-18" y1="-20" x2="22" y2="-20" stroke="rgba(200,180,154,0.4)" stroke-width="1"/>
+          </g>
+          <!-- 星 -->
+          <circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="160" cy="25" r="1.5" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="320" cy="50" r="1" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="400" cy="30" r="1.5" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="60" cy="70" r="1" fill="rgba(255,255,255,0.3)"/>
+          <circle cx="440" cy="55" r="1" fill="rgba(255,255,255,0.4)"/>
+          <!-- テキスト -->
+          <text x="240" y="330" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" letter-spacing="5" fill="rgba(200,180,154,0.4)">OARAI · IBARAKI</text>
+          <!-- コーナー -->
+          <line x1="20" y1="20" x2="44" y2="20" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="20" y1="20" x2="20" y2="44" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="460" y1="20" x2="436" y2="20" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="460" y1="20" x2="460" y2="44" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="20" y1="340" x2="44" y2="340" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="20" y1="340" x2="20" y2="316" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="460" y1="340" x2="436" y2="340" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+          <line x1="460" y1="340" x2="460" y2="316" stroke="rgba(200,180,154,0.35)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ISSUE -->
+<section id="issue">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Issue</div>
+      <p class="section-ja">料理人が抱える課題</p>
+    </div>
+    <div class="issue-grid">
+      <div class="issue-card fade-in">
+        <div class="issue-num">01</div>
+        <div class="issue-title">仕入れに時間がかかる</div>
+        <p class="issue-text">1回の仕入れに2〜3時間。早朝から市場へ出向き、魚を選び、持ち帰る時間は調理の時間を奪います。</p>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-num">02</div>
+        <div class="issue-title">下処理の人件費・食材ロス</div>
+        <p class="issue-text">仕込みと調理の手間が重なり、食材ロスや人件費の増大につながります。</p>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-num">03</div>
+        <div class="issue-title">鮮度の不安定さ</div>
+        <p class="issue-text">市場経由では産地から時間がかかり、鮮度にばらつきが生じます。最高の状態で提供したくても限界があります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Features</div>
+      <p class="section-ja">Fish Hackの3つの強み</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card fade-in">
+        <div class="feat-icon">🎣</div>
+        <div class="feat-title">高鮮度の地魚<br>オーダーメイド</div>
+        <p class="feat-text">高鮮度の地魚をオーダーメイドでお届けします。仕込みや調理の手間を削減し、食材ロスや人件費を効率よく削減可能です。3枚おろしやフィレ、グラム指定のカット等ご要望に応対します。</p>
+        <span class="feat-tag">オーダーメイド対応</span>
+      </div>
+      <div class="feat-card fade-in">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">丁寧仕立<br>放血神経締め</div>
+        <p class="feat-text">大洗港で水揚げされた地魚を最速で下処理します。「放血神経締め」にて魚介の鮮度と旨みのポテンシャルを最大限に高めます。</p>
+        <span class="feat-tag">鮮度最大化</span>
+      </div>
+      <div class="feat-card fade-in">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">スマホで<br>カンタン注文</div>
+        <p class="feat-text">スマホから簡単に注文できます。14時までのご注文で即日発送いたします。忙しい料理人の方でも手軽にご利用いただけます。</p>
+        <span class="feat-tag">14時〆即日発送</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OARAI -->
+<section id="oarai">
+  <div class="inner">
+    <div class="oarai-layout">
+      <div class="fade-in">
+        <div class="section-en">Oarai</div>
+        <p class="section-ja">大洗の地魚を</p>
+        <p class="section-body">大洗港は大きな河川が流れ込み、とても身質の良い魚介類が水揚げされます。さらに暖流と寒流がぶつかる海域で魚種の豊富さも魅力の一つとなっております。</p>
+        <div class="oarai-stats">
+          <div class="stat-box">
+            <div class="stat-num">20<small style="font-size:20px">+</small></div>
+            <div class="stat-label">取扱魚種</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">即日</div>
+            <div class="stat-label">発送対応</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">0</div>
+            <div class="stat-label">初期費用</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">14<small style="font-size:14px">時〆</small></div>
+            <div class="stat-label">注文締切</div>
+          </div>
+        </div>
+      </div>
+      <div class="oarai-img fade-in">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <linearGradient id="og1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#0a2235"/>
+              <stop offset="100%" stop-color="#0d3a52"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="400" fill="url(#og1)"/>
+          <!-- 海エリア -->
+          <rect x="0" y="0" width="400" height="400" fill="rgba(15,90,120,0.3)"/>
+          <!-- 陸地（茨城県・大洗付近の簡略地図） -->
+          <path d="M80,60 L180,40 L260,55 L300,80 L320,130 L310,190 L280,230 L250,260 L220,310 L200,360 L160,360 L140,300 L120,250 L90,200 L70,150 Z" fill="rgba(26,50,40,0.7)" stroke="rgba(200,180,154,0.2)" stroke-width="1"/>
+          <!-- 大洗港マーク -->
+          <circle cx="290" cy="175" r="8" fill="none" stroke="var(--coral)" stroke-width="1.5"/>
+          <circle cx="290" cy="175" r="3" fill="var(--coral)" opacity="0.8"/>
+          <!-- 防波堤 -->
+          <line x1="290" y1="175" x2="330" y2="155" stroke="rgba(200,180,154,0.5)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="290" y1="175" x2="325" y2="200" stroke="rgba(200,180,154,0.5)" stroke-width="2" stroke-linecap="round"/>
+          <!-- ラベル -->
+          <text x="308" y="172" font-family="'DM Mono',monospace" font-size="8" fill="rgba(200,180,154,0.8)" letter-spacing="1">OARAI</text>
+          <!-- 海流ライン -->
+          <path d="M340,80 Q370,140 350,200 Q330,260 360,320" fill="none" stroke="rgba(15,124,110,0.4)" stroke-width="1.5" stroke-dasharray="4 6"/>
+          <!-- 暖流ラベル -->
+          <text x="355" y="200" font-family="'DM Mono',monospace" font-size="7" fill="rgba(15,124,110,0.6)" transform="rotate(10,355,200)">黒潮</text>
+          <!-- 寒流ライン -->
+          <path d="M360,60 Q380,120 355,180 Q335,240 365,300" fill="none" stroke="rgba(26,100,180,0.4)" stroke-width="1.5" stroke-dasharray="4 6"/>
+          <text x="370" y="140" font-family="'DM Mono',monospace" font-size="7" fill="rgba(26,100,180,0.6)" transform="rotate(10,370,140)">親潮</text>
+          <!-- 格子 -->
+          <line x1="0" y1="100" x2="400" y2="100" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <line x1="0" y1="300" x2="400" y2="300" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <line x1="100" y1="0" x2="100" y2="400" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <line x1="200" y1="0" x2="200" y2="400" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <line x1="300" y1="0" x2="300" y2="400" stroke="rgba(200,180,154,0.06)" stroke-width="1"/>
+          <!-- 座標 -->
+          <text x="200" y="385" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8" fill="rgba(200,180,154,0.3)" letter-spacing="2">36°18'N · 140°34'E</text>
+          <!-- コーナー装飾 -->
+          <line x1="16" y1="16" x2="36" y2="16" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="16" y1="16" x2="16" y2="36" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="384" y1="16" x2="364" y2="16" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="384" y1="16" x2="384" y2="36" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="16" y1="384" x2="36" y2="384" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="16" y1="384" x2="16" y2="364" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="384" y1="384" x2="364" y2="384" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+          <line x1="384" y1="384" x2="384" y2="364" stroke="rgba(200,180,154,0.3)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ITEMS -->
+<section id="items">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Items</div>
+      <p class="section-ja">アイテム・価格相場</p>
+    </div>
+    <div class="items-tabs">
+      <button class="items-tab active" onclick="switchItemTab('new')">🆕 新着アイテム</button>
+      <button class="items-tab" onclick="switchItemTab('all')">📦 アイテム一覧</button>
+      <button class="items-tab" onclick="switchItemTab('market')">💴 価格相場</button>
+    </div>
+
+    <!-- 新着 -->
+    <div class="items-panel active" id="tab-new">
+      <div class="items-grid" id="grid-new"></div>
+    </div>
+
+    <!-- 一覧 -->
+    <div class="items-panel" id="tab-all">
+      <div class="items-grid" id="grid-all"></div>
+    </div>
+
+    <!-- 相場 -->
+    <div class="items-panel" id="tab-market">
+      <div class="market-box">
+        <p class="market-note">※ 仕入れ状況により変動あり　随時更新</p>
+        <div class="market-grid" id="grid-market"></div>
+      </div>
+      <p style="font-size:11px;color:#999;margin-top:10px;padding:6px 12px;background:#f5f0ea;border-radius:6px;">価格はすべて目安です。数量・時期・産地により変わります。詳細はお問い合わせください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="inner">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-en">Order</div>
+      <p class="section-ja" style="color:rgba(255,255,255,0.4);">ご注文の流れ</p>
+    </div>
+    <div class="order-steps">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-icon">📝</div>
+        <div class="step-title">会員登録</div>
+        <p class="step-text">無料で会員登録。初期費用・月会費なし。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-icon">📱</div>
+        <div class="step-title">スマホで注文</div>
+        <p class="step-text">魚種・カット方法・グラム数を指定して注文。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-icon">⚡</div>
+        <div class="step-title">14時〆 即日処理</div>
+        <p class="step-text">大洗港で水揚げ後、最速で下処理・梱包。</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚚</div>
+        <div class="step-title">翌朝お届け</div>
+        <p class="step-text">高鮮度のまま直接お届け。仕込み不要で調理へ。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="inner" style="text-align:center;">
+    <div class="section-en fade-in">Join</div>
+    <p class="cta-title fade-in">今すぐ始める</p>
+    <p class="cta-text fade-in">無料会員登録で、大洗の高鮮度地魚を<br>あなたのキッチンへ。</p>
+    <a href="https://form.run/@epw-ds--JkOsbf37iRHApb0uipPi" target="_blank" class="cta-btn fade-in">無料で会員登録する</a>
+    <p class="cta-note fade-in">初期費用・月会費なし　14時までのご注文で即日発送</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="fade-in">
+      <div class="section-en">Contact</div>
+      <p class="section-ja">お問い合わせ</p>
+    </div>
+    <div class="contact-grid">
+      <dl class="contact-info fade-in">
+        <dt>Company</dt>
+        <dd>株式会社 One Table Design</dd>
+        <dt>Address</dt>
+        <dd>〒311-1301<br>茨城県東茨城郡大洗町港中央9-4</dd>
+        <dt>TEL</dt>
+        <dd><a href="tel:0292672278">029-267-2278</a></dd>
+        <dt>Mail</dt>
+        <dd><a href="mailto:epw.ds0626@gmail.com">epw.ds0626@gmail.com</a></dd>
+        <dt>Web</dt>
+        <dd><a href="https://epwds0626-oss.github.io/onetable-design/" target="_blank">One Table Design</a></dd>
+      </dl>
+      <div class="contact-map fade-in" style="padding:0;overflow:hidden;border-radius:4px;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3224.8!2d140.5694!3d36.3094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60220b9e5c3a4e4b%3A0x1a4e2b3c4d5e6f7a!2z5aSn5rWm55S677yI5qCq5byP5Lya56S-T25lIFRhYmxlIERlc2lnbuOAgemHh-mHjuS4reWbm-mHkeiqnu+8ieOAgeiKl-WbnOeUsOiIh-OBueOBo-OBqA!5e0!3m2!1sja!2sjp!4v1000000000000"
+          width="100%" height="100%" style="border:0;display:block;min-height:360px;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fish Hack</div>
+  <div class="footer-links">
+    <a href="#vision">Vision</a>
+    <a href="#features">Features</a>
+    <a href="#items">Items</a>
+    <a href="#order">Order</a>
+    <a href="https://epwds0626-oss.github.io/onetable-design/" target="_blank">One Table Design</a>
+  </div>
+  <div class="footer-copy">© 2025 Fish Hack / One Table Design</div>
+</footer>
+
+<script>
+// ===== GAS URL（スプレッドシート連携） =====
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbynDGIjFjzalX-sxUkL0ak_Q2zVt0ViXWxYVtECRgFLH37oJk5r-pHX9eINd0St0r4F/exec';
+const bgCycle = ['bg-o','bg-p','bg-b'];
+
+function makeCard(it, i, isNew){
+  const bg = it.bg || bgCycle[i%3];
+  const img = it.image
+    ? `<img src="${it.image}" style="width:100%;height:100%;object-fit:cover;">`
+    : `<span style="font-size:38px;">🐟</span>`;
+  return `<div class="item-card${isNew?' new-card':''}">
+    <div class="item-img ${bg}">${img}</div>
+    <div class="item-body">
+      ${isNew?'<span class="item-new">NEW</span>':''}
+      <p class="item-name">${it.name}</p>
+      <p class="item-origin">${it.origin}</p>
+      <span class="item-price">${it.price}</span><span class="item-unit">${it.unit}</span>
+    </div>
+  </div>`;
+}
+
+function renderItems(data){
+  const newItems = data.newItems || [];
+  const allItems = data.allItems || [];
+  const all = [...newItems, ...allItems];
+
+  document.getElementById('grid-new').innerHTML = newItems.length
+    ? newItems.map((it,i)=>makeCard(it,i,true)).join('')
+    : '<p style="color:#aaa;font-size:14px;padding:1rem;">現在新着アイテムはありません</p>';
+
+  document.getElementById('grid-all').innerHTML = all.length
+    ? all.map((it,i)=>makeCard(it,i,false)).join('')
+    : '<p style="color:#aaa;font-size:14px;padding:1rem;">アイテムがありません</p>';
+
+  document.getElementById('grid-market').innerHTML = all.map(it=>`
+    <div class="market-item">
+      <p class="market-fish">${it.name}</p>
+      <p class="market-range">${it.price}${it.unit}</p>
+      <p class="market-sub">${it.origin}</p>
+    </div>`).join('');
+}
+
+function showLoading(){
+  ['grid-new','grid-all','grid-market'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = '<p style="color:#aaa;font-size:13px;padding:1rem;">読み込み中...</p>';
+  });
+}
+
+function loadItems(){
+  showLoading();
+  fetch(GAS_URL)
+    .then(r=>r.json())
+    .then(data=>renderItems(data))
+    .catch(()=>{
+      ['grid-new','grid-all','grid-market'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = '<p style="color:#e05a30;font-size:13px;padding:1rem;">データ読み込みエラー</p>';
+      });
+    });
+}
+
+function switchItemTab(tab){
+  document.querySelectorAll('.items-tab').forEach((b,i)=>{
+    b.classList.toggle('active', ['new','all','market'][i]===tab);
+  });
+  document.querySelectorAll('.items-panel').forEach((p,i)=>{
+    p.classList.toggle('active', ['tab-new','tab-all','tab-market'][i]==='tab-'+tab);
+  });
+}
+
+// ===== FADE IN =====
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.12});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+loadItems();
+</script>
+</body>
+</html>
